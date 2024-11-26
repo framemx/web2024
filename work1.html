@@ -1,25 +1,30 @@
 <!DOCTYPE html>
 <html lang="th">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>งานที่ 1: แบบทดสอบ ม.1</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&family=Sarabun:wght@400;500&display=swap" rel="stylesheet">
-    
+
     <style>
         @font-face {
-            font-family: font;
-            src: url(./font/KrarokDemo.ttf);
+            font-family: 'Krarok';
+            src: url('./font/KrarokDemo.ttf') format('truetype');
         }
 
         body {
-            font-family: 'Sarabun', sans-serif;
             background-color: #64b3fd;
             margin: 0;
             padding: 0;
             color: #333;
-            font-family: font;
+            font-family: Krarok, 'Sarabun', sans-serif;
         }
+
+        button {
+            font-family: 'Krarok', 'Sarabun', sans-serif;
+        }
+
 
         .container-fluid {
             background-color: #f87721;
@@ -32,7 +37,7 @@
         }
 
         h1 {
-            font-size: 2rem;
+            font-size: 4rem;
             margin: 0;
             font-weight: 600;
         }
@@ -44,9 +49,9 @@
         }
 
         button {
-            background-color: #f87721;
+            background-color: #fca32f;
             color: white;
-            font-size: 1.2rem;
+            font-size: 2rem;
             padding: 12px 25px;
             border-radius: 5px;
             border: none;
@@ -54,6 +59,8 @@
             margin-top: 20px;
             width: 100%;
             transition: background-color 0.3s ease;
+            border: 3px solid;
+            border-radius: 15px;
         }
 
         button:hover {
@@ -94,7 +101,7 @@
             color: #555;
         }
 
-        .quiz-option input:checked + label {
+        .quiz-option input:checked+label {
             font-weight: bold;
             color: #4CAF50;
         }
@@ -110,66 +117,92 @@
 
         #resultBox {
             margin-top: 20px;
-            font-size: 1.2rem;
+            font-size: 2rem;
             font-weight: 600;
             text-align: center;
-            color: #333;
+            color: #fff;
+            background-color: #28a745;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            transition: all 0.3s ease;
+        }
+
+        #resultBox:hover {
+            transform: scale(1.05);
+        }
+
+        .img_hoome {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .img_hoome img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 15px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .img_hoome img:hover {
+            transform: scale(1.05);
         }
 
     </style>
 </head>
+
 <body>
 
-<div class="container-fluid">
-    <h1>แบบทดสอบเข้าม.1</h1>
-</div>
-
-<div class="container">
-    <div id="startBox">
-        <button id="btnStart">เริ่มทำแบบทดสอบ</button>
+    <div class="container-fluid">
+        <h1>แบบทดสอบเข้าม.1</h1>
     </div>
-    <div id="quizBox">
-        <div id="quizListBox"></div>
-        <button id="btnCheckAnswer">ตรวจคำตอบ</button>
-        <div id="resultBox"></div>
+
+    <div class="container">
+        <div class="img_hoome">
+            <img src="./img/banner_file.jpg" alt="การสอบเข้าม.1">
+        </div>
+        <div id="startBox">
+            <button id="btnStart">เริ่มทำแบบทดสอบ</button>
+        </div>
+        <div id="quizBox">
+            <div id="quizListBox"></div>
+            <button id="btnCheckAnswer">ตรวจคำตอบ</button>
+            <div id="resultBox"></div>
+        </div>
     </div>
-</div>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-<script>
-    let quizlist = []; // ใช้เก็บข้อมูลคำถาม
-    let userAnswers = []; // เก็บคำตอบของผู้ใช้
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script>
+        let quizlist = [];
+        let userAnswers = [];
 
-    $(function(){
-        // เมื่อคลิกเริ่มทำแบบทดสอบ
-        $("#btnStart").click(function(){
-            $("#startBox").hide();
-            $("#quizBox").show();
-            loadQuizData(); // โหลดข้อมูลคำถาม
+        $(function () {
+            $("#btnStart").click(function () {
+                $("#startBox").hide();
+                $("#quizBox").show();
+                loadQuizData();
+            });
+
+            $("#btnCheckAnswer").click(function () {
+                checkAnswers();
+            });
         });
 
-        // เมื่อคลิกตรวจคำตอบ
-        $("#btnCheckAnswer").click(function(){
-            checkAnswers(); // ตรวจสอบคำตอบ
-        });
-    });
+        function loadQuizData() {
+            fetch('quiz.json')
+                .then(response => response.json())
+                .then(data => {
+                    quizlist = data.questions;
+                    displayQuizList();
+                })
+                .catch(error => console.error('Error loading the quiz data:', error));
+        }
 
-    // โหลดข้อมูลจาก quiz.json
-    function loadQuizData() {
-        fetch('quiz.json')
-            .then(response => response.json())
-            .then(data => {
-                quizlist = data.questions; // บันทึกข้อมูลคำถาม
-                displayQuizList(); // แสดงคำถาม
-            })
-            .catch(error => console.error('Error loading the quiz data:', error));
-    }
-
-    // แสดงคำถามในแบบทดสอบ
-    function displayQuizList() {
-        $("#quizListBox").html(""); // ล้างข้อมูลเก่า
-        quizlist.forEach(function(q, index) {
-            const questionHTML = `
+        function displayQuizList() {
+            $("#quizListBox").html("");
+            quizlist.forEach(function (q, index) {
+                const questionHTML = `
                 <div class="quiz-box">
                     <div class="quiz-question">ข้อที่ ${index + 1}: ${q.title}</div>
                     <div class="quiz-option">
@@ -182,33 +215,32 @@
                     </div>
                 </div>
             `;
-            $("#quizListBox").append(questionHTML);
-        });
-    }
+                $("#quizListBox").append(questionHTML);
+            });
+        }
 
-    // ตรวจคำตอบของผู้ใช้
-    function checkAnswers() {
-        let score = 0;
-        userAnswers = []; // รีเซ็ตคำตอบของผู้ใช้ก่อนตรวจ
+        function checkAnswers() {
+            let score = 0;
+            userAnswers = [];
 
-        quizlist.forEach(function(q, index) {
-            const selectedOption = $("input[name='q" + index + "']:checked").val();
-            if (selectedOption) {
-                userAnswers.push(parseInt(selectedOption)); // เก็บคำตอบที่เลือก
-                if (parseInt(selectedOption) === q.answer) {
-                    score++; // คำนวณคะแนนถ้าคำตอบถูกต้อง
+            quizlist.forEach(function (q, index) {
+                const selectedOption = $("input[name='q" + index + "']:checked").val();
+                if (selectedOption) {
+                    userAnswers.push(parseInt(selectedOption));
+                    if (parseInt(selectedOption) === q.answer) {
+                        score++;
+                    }
+                } else {
+                    userAnswers.push(null);
                 }
-            } else {
-                userAnswers.push(null); // ถ้าไม่มีการเลือกคำตอบให้เก็บค่า null
-            }
-        });
+            });
 
-        const totalQuestions = quizlist.length;
-        const resultText = `คุณทำคะแนนได้ ${score} จาก ${totalQuestions} ข้อ`;
-        $("#resultBox").text(resultText); // แสดงผลคะแนน
-    }
-</script>
+            const totalQuestions = quizlist.length;
+            const resultText = `คุณทำคะแนนได้ ${score} จาก ${totalQuestions} ข้อ`;
+            $("#resultBox").text(resultText);
+        }
+    </script>
 
 </body>
-</html>
 
+</html>
