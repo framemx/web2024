@@ -1,1 +1,183 @@
+<!DOCTYPE html>
+<html lang="th">
 
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>แบบทดสอบ ม.1</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <style>
+        body {
+            background-color: #ffa939;
+            font-family: font;
+        }
+
+        .container-fluid {
+            background-color: #007bff;
+            color: white;
+            padding: 50px 0;
+            text-align: center;
+            border-bottom: 5px solid #0056b3;
+        }
+
+        h1 {
+            font-size: 3rem;
+            font-weight: bold;
+        }
+
+        .btn-primary {
+            font-size: 1.2rem;
+            padding: 10px 20px;
+            border-radius: 30px;
+            background-color: #0056b3;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background-color: #003c8e;
+        }
+
+        .quiz-container {
+            margin-top: 30px;
+        }
+
+        .quiz-option {
+            margin-left: 20px;
+            padding: 8px;
+            font-size: 1.1rem;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            transition: background-color 0.3s;
+        }
+
+        .quiz-option:hover {
+            background-color: #e0e0e0;
+        }
+
+        .quiz-option input {
+            margin-right: 10px;
+        }
+
+        .quiz-container .p-2 {
+            margin-top: 10px;
+        }
+
+        .quiz-container .question {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 15px;
+        }
+
+        #btnCheckAnswer {
+            font-size: 1.3rem;
+            padding: 12px 25px;
+            margin-top: 20px;
+            border-radius: 30px;
+            background-color: #28a745;
+            border: none;
+        }
+
+        #btnCheckAnswer:hover {
+            background-color: #218838;
+        }
+
+        .question-number {
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        @font-face {
+            font-family: font;
+            src: url(./font/KrarokDemo.ttf);
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Header -->
+    <div class="container-fluid">
+        <h1>แบบทดสอบ ม.1</h1>
+        <p>ทดสอบความรู้ทั่วไปในวิชาวิทยาศาสตร์</p>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container mt-5 quiz-container">
+        <!-- Start Button -->
+        <div class="row" id="startBox">
+            <div class="col-12 text-center">
+                <button class="btn btn-primary" id="btnStart">เริ่มทำแบบทดสอบ</button>
+            </div>
+        </div>
+
+        <!-- Quiz Box -->
+        <div class="row" id="quizBox" style="display: none;">
+            <div id="quizListBox"></div>
+            <div class="col-12 text-center">
+                <button class="btn btn-success" id="btnCheckAnswer">ตรวจคำตอบ</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JQuery and Script -->
+    <script>
+        var quizlist = [];
+        $(function () {
+            $.getJSON("quiz.json", function (data) {
+                quizlist = data;
+                $("#quizBox").hide();
+                $("#btnStart").click(function () {
+                    $("#startBox").hide();
+                    $("#quizBox").show();
+                    displayQuizList();
+                });
+
+                $("#btnCheckAnswer").click(function () {
+                    checkAnswers();
+                });
+            });
+        });
+
+        function displayQuizList() {
+            $("#quizListBox").html("");
+            quizlist.forEach(function (q, i) {
+                displayQuiz(i, q);
+            });
+        }
+
+        function displayQuiz(i, q) {
+            var no = i + 1;
+            var questionHtml = "<div class='p-2 question'>";
+            questionHtml += "<div class='question-number'>ข้อที่ " + no + ":</div>";
+            questionHtml += "<div>" + q.title + "</div>";
+
+            q.options.forEach(function (opt, idx) {
+                var optionNum = idx + 1;
+                questionHtml += "<div class='quiz-option'>";
+                questionHtml += "<input type='radio' name='q" + no + "' value='" + optionNum + "'> " + optionNum + ". " + opt + "</div>";
+            });
+
+            questionHtml += "</div>";
+            $("#quizListBox").append(questionHtml);
+        }
+
+        function checkAnswers() {
+            var score = 0;
+            quizlist.forEach(function (q, i) {
+                var selectedOption = $("input[name='q" + (i + 1) + "']:checked").val();
+                if (selectedOption == q.answer) {
+                    score++;
+                }
+            });
+            alert("คุณได้คะแนน: " + score + " จาก " + quizlist.length + " ข้อ");
+        }
+    </script>
+
+</body>
+
+</html>
