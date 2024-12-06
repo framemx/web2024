@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue Quiz</title>
+    <script src="https://unpkg.com/vue@3.2.47/dist/vue.global.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/vuetify@3.7.4/dist/vuetify.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/vuetify@3.7.4/dist/vuetify.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/@mdi/font/css/materialdesignicons.min.css" rel="stylesheet">
+    <style>
+        @font-face {
+            font-family: 'Krarok';
+            src: url('./font/KrarokDemo.ttf') format('truetype');
+        }
+
+        body {
+            font-family: Krarok, 'Sarabun', sans-serif;
+            background-color: #e3f2fd;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            background-image: url('./img/AdobeStock_961830310_Preview.jpeg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .question-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 30px auto;
+            padding: 30px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+        }
+
+        .question-container .title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #ff7043;
+            margin-bottom: 20px;
+        }
+
+        .option-button {
+            margin: 15px auto;
+            width: 100%;
+            max-width: 400px;
+            padding: 12px 18px;
+            border-radius: 10px;
+            font-size: 1.2rem;
+            transition: background-color 0.3s ease;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 60px;
+            text-align: center;
+        }
+
+        .footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            padding: 15px 30px;
+            background-color: #ff7043;
+            color: white;
+            text-align: center;
+        }
+
+        .footer v-btn {
+            width: 100%;
+        }
+
+        .btn-start {
+            background-color: #1e88e5;
+            color: white;
+            font-size: 1.5rem;
+            padding: 12px 24px;
+            min-width: 200px;
+        }
+
+        .btn-check {
+            background-color: #1e88e5;
+            color: white;
+            font-size: 1.5rem;
+            padding: 12px 24px;
+        }
+
+        .btn-start:hover,
+        .btn-check:hover {
+            background-color: #ff7043;
+        }
+
+        .bg-selected {
+            background-color: #1e88e5 !important;
+            color: white;
+        }
+
+        .bnt_s {
+            margin-top: 60px;
+            text-align: center;
+            justify-content: center;
+            min-height: 90px;
+            min-width: 250px;
+            background-color: #ff7043;
+            border-radius: 20px;
+            font-size: 40px;
+        }
+
+        .bnt_s:hover {
+            background-color: white;
+            color: #ff7043;
+            border: 4px solid #ff7043;
+        }
+
+        .texthead {
+            font-size: 90px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <v-app>
+            <div class="pa-9 bg-primary text-white text-center texthead">แบบทดสอบ</div>
+
+            <div v-if="page === 1" class="text-center">
+                <v-btn class="btn-start bnt_s" @click="page = 2">เริ่มทำแบบทดสอบ</v-btn>
+            </div>
+
+            <div v-if="page === 2">
+                <div v-for="(q, i) in qlist" :key="i" class="question-container">
+                    <div class="title">ข้อที่ {{ i + 1 }}: {{ q.title }}</div>
+                    <div v-for="(option, index) in q.options" :key="index" class="option-wrapper">
+                        <v-btn @click="selectOption(i, index + 1)" 
+                               :class="{
+                                   'bg-selected': answers[i] === (index + 1),
+                               }" 
+                               class="option-button">
+                            {{ index + 1 }}. {{ option }}
+                        </v-btn>
+                    </div>
+                </div>
+
+                <div class="footer">
+                    <v-btn v-if="validate()" @click="grading" class="btn-check">
+                        <v-icon>mdi-check</v-icon> ตรวจคำตอบ
+                    </v-btn>
+                    <div v-else>กรุณาตอบให้ครบทุกคำถาม</div>
+                </div>
+            </div>
+
+            <div v-if="page === 3" class="text-center pa-4">
+                <div>คุณได้คะแนน {{ score }} จาก {{ qlist.length }} คะแนน</div>
+                <v-btn color="primary" @click="resetQuiz" class="mt-4">ทำแบบทดสอบใหม่</v-btn>
+            </div>
+        </v-app>
+    </div>
+
+    <script>
+        const { createApp } = Vue;
+        const { createVuetify } = Vuetify;
+        const vuetify = createVuetify();
+
+        const app = createApp({
+            data() {
+                return {
+                    page: 1,
+                    qlist: [],
+                    answers: [],
+                    score: 0,
+                };
+            },
+            mounted() {
+                this.load_data();
+            },
+            methods: {
+                load_data() {
+                    fetch('quiz2.json')
+                        .then(response => response.json())
+                        .then(data => {
+                            this.qlist = data;
+                        })
+                        .catch(error => console.error('Error loading quiz data:', error));
+                },
+                selectOption(questionIndex, optionIndex) {
+                    this.answers[questionIndex] = optionIndex;
+                },
+                validate() {
+                    return this.answers.length === this.qlist.length && !this.answers.includes(undefined);
+                },
+                grading() {
+                    this.score = this.qlist.reduce((score, q, i) => 
+                        score + (this.answers[i] === q.answer ? 1 : 0), 0);
+                    this.page = 3;
+                },
+                resetQuiz() {
+                    this.page = 1;
+                    this.answers = [];
+                    this.score = 0;
+                },
+            }
+        });
+
+        app.use(vuetify).mount('#app');
+    </script>
+</body>
+
+</html>

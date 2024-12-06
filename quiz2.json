@@ -1,0 +1,102 @@
+[
+    {
+        "title": "อะไรคือหน่วยที่ใช้ในการวัดความเร็วของ CPU?",
+        "options": ["กิกะเฮิร์ตซ์", "กิกะไบต์", "เมกะเฮิร์ตซ์", "เมกะไบต์"],
+        "answer": 1
+    },
+    {
+        "title": "ข้อใดไม่ใช่ประเภทของหน่วยความจำหลัก?",
+        "options": ["RAM", "ROM", "CPU", "Cache"],
+        "answer": 3
+    },
+    {
+        "title": "การใช้คำสั่งใน Unix เพื่อดูไฟล์ที่มีอยู่ในโฟลเดอร์คือคำสั่งอะไร?",
+        "options": ["ls", "dir", "pwd", "echo"],
+        "answer": 1
+    },
+    {
+        "title": "ในภาษาโปรแกรม C, ตัวแปรประเภทใดใช้เก็บค่าทศนิยม?",
+        "options": ["int", "char", "float", "bool"],
+        "answer": 3
+    },
+    {
+        "title": "ข้อใดคือเว็บเบราว์เซอร์ที่ได้รับความนิยมมากที่สุด?",
+        "options": ["Chrome", "Firefox", "Safari", "Edge"],
+        "answer": 1
+    },
+    {
+        "title": "ข้อใดคือโปรโตคอลที่ใช้ในการส่งอีเมล์?",
+        "options": ["FTP", "SMTP", "HTTP", "DNS"],
+        "answer": 2
+    },
+    {
+        "title": "ข้อใดคือชื่อของภาษาโปรแกรมที่ใช้ในการพัฒนาเว็บไซต์?",
+        "options": ["Python", "Java", "HTML", "Swift"],
+        "answer": 3
+    },
+    {
+        "title": "การใช้คำสั่งในการคัดลอกไฟล์ในระบบ Linux คือคำสั่งใด?",
+        "options": ["cp", "mv", "rm", "ls"],
+        "answer": 1
+    },
+    {
+        "title": "RAM ย่อมาจากคำว่าอะไร?",
+        "options": ["Read Access Memory", "Random Access Memory", "Read-only Access Memory", "Random-only Access Memory"],
+        "answer": 2
+    },
+    {
+        "title": "อะไรคือข้อดีของการใช้ SSD แทน HDD?",
+        "options": ["ความเร็วในการอ่าน/เขียนเร็วกว่า", "ราคาแพงกว่า", "มีพื้นที่เก็บข้อมูลมากกว่า", "ไม่มีข้อดี"],
+        "answer": 1
+    },
+    {
+        "title": "คำสั่งที่ใช้ในการย้ายไฟล์ใน Linux คือคำสั่งใด?",
+        "options": ["cp", "mv", "rm", "ls"],
+        "answer": 2
+    },
+    {
+        "title": "โปรแกรมใดที่ใช้สำหรับการทำงานกับกราฟิก 2D?",
+        "options": ["Photoshop", "Microsoft Word", "Excel", "Visual Studio"],
+        "answer": 1
+    },
+    {
+        "title": "สิ่งที่ใช้ในการจัดการฐานข้อมูลคือโปรแกรมอะไร?",
+        "options": ["MySQL", "Notepad", "Excel", "PowerPoint"],
+        "answer": 1
+    },
+    {
+        "title": "ข้อใดคือประเภทของซอฟต์แวร์ที่ช่วยให้สามารถตรวจจับไวรัส?",
+        "options": ["Antivirus", "Browser", "Word Processor", "Media Player"],
+        "answer": 1
+    },
+    {
+        "title": "คำว่า URL หมายถึงอะไร?",
+        "options": ["Uniform Resource Locator", "Universal Resource Locator", "Uniform Resource Link", "Universal Resource Link"],
+        "answer": 1
+    },
+    {
+        "title": "การใช้คำสั่งใน Windows เพื่อดูสถานะการเชื่อมต่ออินเทอร์เน็ตคือคำสั่งอะไร?",
+        "options": ["ping", "ipconfig", "dir", "tasklist"],
+        "answer": 2
+    },
+    {
+        "title": "ในภาษาโปรแกรม Python, คำสั่งใดใช้ในการพิมพ์ข้อความออกทางหน้าจอ?",
+        "options": ["echo", "print", "write", "echo.print"],
+        "answer": 2
+    },
+    {
+        "title": "ข้อใดคือรูปแบบของไฟล์ที่ใช้ในการบีบอัดข้อมูล?",
+        "options": [".jpg", ".zip", ".txt", ".pdf"],
+        "answer": 2
+    },
+    {
+        "title": "ในคอมพิวเตอร์, RAM ถูกใช้เพื่ออะไร?",
+        "options": ["เก็บข้อมูลถาวร", "เก็บข้อมูลชั่วคราว", "เก็บข้อมูลที่ไม่จำเป็น", "เก็บระบบปฏิบัติการ"],
+        "answer": 2
+    },
+    {
+        "title": "ข้อใดคือคำสั่งที่ใช้ในการดู IP Address ในระบบ Linux?",
+        "options": ["ipconfig", "ifconfig", "ping", "netstat"],
+        "answer": 2
+    }
+]
