@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <title>Work3</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://unpkg.com/react-bootstrap@2.7.0/dist/react-bootstrap.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <style>
+        @font-face {
+            font-family: Quark-Bold;
+            src: url(./font/Quark-Bold.otf);
+        }
+        @font-face {
+            font-family: Quark-Light;
+            src: url(./font/Quark-Light.otf);
+        }
+        @font-face {
+            font-family: SOV_Khong;
+            src: url(./font/SOV_Khong.ttf);
+        }
+        @font-face {
+            font-family: KrarokDemo;
+            src: url(./font/KrarokDemo.ttf);
+        }
+        body {
+            background: linear-gradient(135deg, #00d2ff, #3a7bd5); /* ฟ้าใสไปฟ้าเข้ม */
+            font-family: 'Helvetica Neue', sans-serif;
+            color: #ffffff; /* สีตัวอักษรขาว */
+            font-family: KrarokDemo;
+        }
+    
+        .card {
+            border-radius: 20px;
+            background-color: rgba(255, 255, 255, 0.85); /* พื้นหลังโปร่งแสง */
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+        }
+    
+        .card-header {
+            background-color: #4c6ef5; /* ฟ้าเข้ม */
+            color: #fff;
+            font-size: 1.5rem;
+            text-align: center;
+            padding: 1.2rem;
+            border-radius: 20px 20px 0 0;
+            font-weight: bold;
+            font-family: Quark-Bold;
+        }
+    
+        .card-footer {
+            background-color: #fff;
+            color: #333;
+            font-size: 1rem;
+            text-align: center;
+            padding: 0.8rem;
+            border-radius: 0 0 20px 20px;
+        }
+    
+        .button-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+    
+        .button-container .btn {
+            padding: 12px 30px;
+            font-size: 1.1rem;
+            border-radius: 50px;
+            background-color: #00d2ff; /* ฟ้าสดใส */
+            color: #fff;
+            border: none;
+            transition: all 0.3s ease;
+        }
+    
+        .button-container .btn:hover {
+            background-color: #3a7bd5; /* ฟ้าเข้ม */
+            transform: scale(1.1);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+    
+        .question-block {
+            background-color: rgba(255, 255, 255, 0.9); /* พื้นหลังโปร่งแสง */
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+    
+        .question-block span {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #3a7bd5; /* ฟ้าเข้ม */
+        }
+    
+        .question-block input[type="radio"] {
+            margin-right: 10px;
+        }
+    
+        .result {
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-align: center;
+            color: #ff7b00; /* สีส้มสดใส */
+        }
+    
+        .menu-btn {
+            background-color: #00d2ff;
+            border: none;
+            color: #fff;
+        }
+    
+        .result-btn {
+            background-color: #ff7b00; /* สีส้มสดใส */
+            border: none;
+            color: #fff;
+        }
+    
+        .result-btn:hover {
+            background-color: #e66800; /* สีส้มเข้ม */
+        }
+    </style>
+    
+    
+</head>
+
+<body>
+    <div id="myapp" class="container p-4"></div>
+    <script type="text/babel">
+        const { Button } = ReactBootstrap;
+
+        class App extends React.Component {
+            state = {
+                qlist: [],
+                status: 0,
+                answers: {},
+                score: 0
+            };
+
+            constructor() {
+                super();
+                this.loadQuiz();
+            }
+
+            async loadQuiz() {
+                try {
+                    const res = await fetch("quiz3.json");
+                    if (!res.ok) throw new Error(`HTTP error! Status: ${res.status}`);
+                    const qlist = await res.json();
+                    console.log("Quiz loaded:", qlist); // Debug
+                    this.setState({ qlist });
+                } catch (error) {
+                    console.error("Error loading quiz:", error);
+                }
+            }
+
+            checkAnswer = () => {
+                const score = this.state.qlist.reduce((total, q, i) => {
+                    return total + (q.answer === parseInt(this.state.answers["q" + i]) ? 1 : 0);
+                }, 0);
+                this.setState({ status: 2, score });
+            };
+
+            render() {
+                let content = <Menu app={this} />;
+                if (this.state.status === 1) {
+                    content = <QList list={this.state.qlist} app={this} />;
+                } else if (this.state.status === 2) {
+                    content = <ShowScore app={this} />;
+                }
+
+                return (
+                    <div className="card">
+                        <div className="card-header">
+                            <b>Work3 :</b> แบบทดสอบ ด้วย ReactJS (ข้อสอบทางอุปกรณ์ IT)
+                        </div>
+                        <div className="card-body">{content}</div>
+                        <div className="card-footer">
+                            By Phongwarin Kaewsanga, College of Computing, Khon Kaen University
+                        </div>
+                    </div>
+                );
+            }
+        }
+
+        const Menu = ({ app }) => (
+            <div className="button-container">
+                <Button variant="primary" className="menu-btn" onClick={() => app.setState({ status: 1 })}>
+                    เริ่มทำแบบทดสอบ
+                </Button>
+            </div>
+        );
+
+        const QList = ({ list, app }) => (
+            <div>
+                {list.map((q, i) => (
+                    <div key={i} className="question-block">
+                        <QBlock q={q} i={i} app={app} />
+                    </div>
+                ))}
+                <div className="button-container">
+                    <Button variant="success" onClick={app.checkAnswer}>
+                        ตรวจคำตอบ
+                    </Button>
+                </div>
+            </div>
+        );
+
+        const QBlock = ({ i, q, app }) => {
+            const handleChange = (e) => {
+                const name = e.target.name;
+                const value = e.target.value;
+                const answers = { ...app.state.answers, [name]: value };
+                app.setState({ answers });
+            };
+
+            return (
+                <div>
+                    {i + 1}. <span dangerouslySetInnerHTML={{ __html: q.title }}></span>
+                    <div>
+                        {q.options.map((opt, index) => (
+                            <div key={index}>
+                                <input
+                                    type="radio"
+                                    name={"q" + i}
+                                    value={index + 1}
+                                    onChange={handleChange}
+                                />{" "}
+                                {index + 1}. {opt}
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            );
+        };
+
+        const ShowScore = ({ app }) => (
+            <div>
+                <h3 className="result">
+                    คุณได้คะแนน {app.state.score}/{app.state.qlist.length}
+                </h3>
+                <div className="button-container">
+                    <Button
+                        variant="primary"
+                        className="result-btn"
+                        onClick={() => app.setState({ status: 0, answers: {}, score: 0 })}
+                    >
+                        ตกลง
+                    </Button>
+                </div>
+            </div>
+        );
+
+        const container = document.getElementById("myapp");
+        const root = ReactDOM.createRoot(container);
+        root.render(<App />);
+    </script>
+</body>
+
+</html>
