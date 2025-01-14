@@ -8,16 +8,21 @@
 <body>
   <a-scene>
     <!-- พื้นหลังแบบ 360 -->
-    <a-sky src="./img/bryan-goff-IuyhXAia8EA-unsplash.jpg"></a-sky>
+    <!-- พื้นหลังเป็นสีท้องฟ้าสวยงาม -->
+    <a-sky color="#87CEEB"></a-sky>
 
     <!-- พื้นที่เรียบสีขาว -->
     <a-plane position="0 0 -10" rotation="-90 0 0" width="1000%" height="1000%" color="#FFFFFF"></a-plane>
 
     <!-- โมเดลแทนตนเอง -->
-    <a-entity gltf-model="charactor/Santa Claus.glb" scale="1.5 1.5 1.5" position="3 0 -4" animation-mixer="clip:*"></a-entity>
-    <a-entity gltf-model="charactor/Santa Claus.glb" scale="1.5 1.5 1.5" position="3 0 -10" animation-mixer="clip:*"></a-entity>
-    <a-entity gltf-model="charactor/Santa Claus.glb" scale="1.5 1.5 1.5" position="-4.5 0 -4" animation-mixer="clip:*"></a-entity>
-    <a-entity gltf-model="charactor/Santa Claus.glb" scale="1.5 1.5 1.5" position="-4.5 0 -10" animation-mixer="clip:*"></a-entity>
+    <a-entity gltf-model="charactor/Santa Claus.glb" scale="1.5 1.5 1.5" position="3 0 -4"
+      animation-mixer="clip:*"></a-entity>
+    <a-entity gltf-model="charactor/Santa Claus.glb" scale="1.5 1.5 1.5" position="3 0 -10"
+      animation-mixer="clip:*"></a-entity>
+    <a-entity gltf-model="charactor/Santa Claus.glb" scale="1.5 1.5 1.5" position="-4.5 0 -4"
+      animation-mixer="clip:*"></a-entity>
+    <a-entity gltf-model="charactor/Santa Claus.glb" scale="1.5 1.5 1.5" position="-4.5 0 -10"
+      animation-mixer="clip:*"></a-entity>
 
     <!-- Snowman 1: หมุนและเคลื่อนที่ -->
     <a-entity gltf-model="charactor/Snowman.glb" scale="4.5 4.5 4.5" position="-8.5 0 -10" animation-mixer="clip:*"
@@ -30,15 +35,20 @@
       animation__move="property: position; to: 8.5 1 -10; dir: alternate; dur: 1000; loop: true;"></a-entity>
 
     <!-- ice -->
-    <a-entity gltf-model="charactor/Crystal.glb" scale="1.5 1.5 1.5" position="-25.5 0 -18" animation-mixer="clip:*"></a-entity>
-    <a-entity gltf-model="charactor/Crystal.glb" scale="1.5 1.5 1.5" position="-9.5 0 -35" animation-mixer="clip:*"></a-entity>
-    <a-entity gltf-model="charactor/Crystal.glb" scale="1.5 1.5 1.5" position="19.5 0 -22" animation-mixer="clip:*"></a-entity>
+    <a-entity gltf-model="charactor/Crystal.glb" scale="1.5 1.5 1.5" position="-25.5 0 -18"
+      animation-mixer="clip:*"></a-entity>
+    <a-entity gltf-model="charactor/Crystal.glb" scale="1.5 1.5 1.5" position="-9.5 0 -35"
+      animation-mixer="clip:*"></a-entity>
+    <a-entity gltf-model="charactor/Crystal.glb" scale="1.5 1.5 1.5" position="19.5 0 -22"
+      animation-mixer="clip:*"></a-entity>
 
     <!-- moutain -->
-    <a-entity gltf-model="charactor/Mountain Group.glb" scale="45.5 45.5 45.5" position="19.5 0 -100" animation-mixer="clip:*"></a-entity>
+    <a-entity gltf-model="charactor/Mountain Group.glb" scale="45.5 45.5 45.5" position="19.5 0 -100"
+      animation-mixer="clip:*"></a-entity>
 
     <!-- tree -->
-    <a-entity gltf-model="charactor/Xmas Tree.glb" scale="500.5 500.5 500.5" position="30.5 0 -10" animation-mixer="clip:*"></a-entity>
+    <a-entity gltf-model="charactor/Xmas Tree.glb" scale="500.5 500.5 500.5" position="30.5 0 -10"
+      animation-mixer="clip:*"></a-entity>
 
     <!-- santa -->
     <a-entity gltf-model="charactor/Surprised Santa.glb" scale="60.5 60.5 60.5" position="50.5 0 20"
@@ -47,7 +57,8 @@
       animation-mixer="clip:*" animation="property: rotation; to: 0 360 0; loop: true; dur: 10000"></a-entity>
 
     <!-- home -->
-    <a-entity gltf-model="charactor/Concept Home.glb" scale="60.5 60.5 60.5" position="30.5 5 80" animation-mixer="clip:*"></a-entity>
+    <a-entity gltf-model="charactor/Concept Home.glb" scale="60.5 60.5 60.5" position="30.5 5 80"
+      animation-mixer="clip:*"></a-entity>
 
     <!-- Gifts: หมุนและเคลื่อนที่ไปมา -->
     <a-entity gltf-model="charactor/Gifts.glb" scale="120.5 120.5 120.5" position="-90.5 0 80" animation-mixer="clip:*"
@@ -57,7 +68,8 @@
     <!-- ข้อความ Student ID -->
     <a-text value="Student ID : 653380207-0" color="#FFFFFF" position="-1 2.5 -3" align="center" side="double"></a-text>
 
-    <a-text value="Student Name : Phongwarin Kaewsanga" color="#FFFFFF" position="-1 2 -3" align="center" side="double"></a-text>
+    <a-text value="Student Name : Phongwarin Kaewsanga" color="#FFFFFF" position="-1 2 -3" align="center"
+      side="double"></a-text>
 
     <!-- ข้อความ Department -->
     <a-text value="Department of Computer Science, Khon Kaen University" color="#FFFFFF" position="-1 1.5 -3"
@@ -71,18 +83,10 @@
     <a-box position="-1 0.5 -3" rotation="0 45 0" color="#4CC3D9"
       animation="property: rotation; to: 0 405 0; loop: true; dur: 3000"></a-box>
 
-      <a-sound 
-      src="url(sounds/c90235cea738d9f30fa58ec6c3fe8df5.mp3)" 
-      autoplay="true" 
-      loop="true" 
-      volume="1.0" 
-      spatial="true"
-      distanceModel="linear" 
-      maxDistance="1000"
-      refDistance="1"
-      rolloffFactor="0">
+    <a-sound src="url(sounds/c90235cea738d9f30fa58ec6c3fe8df5.mp3)" autoplay="true" loop="true" volume="1.0"
+      spatial="true" distanceModel="linear" maxDistance="1000" refDistance="1" rolloffFactor="0">
     </a-sound>
-    
+
 
     <a-entity gltf-model="https://example.com/path/to/character_model.glb" scale="1 1 1" position="2 0 -5"
       animation-mixer="clip:*"></a-entity>
